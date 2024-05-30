@@ -32,7 +32,6 @@ const RegisterView = () => {
     });
 
     const result = await response.json();
-    console.log(result)
     if (result.status === 200) {
       formData.reset();
       setIsLoading(false);
