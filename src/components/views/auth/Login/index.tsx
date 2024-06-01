@@ -58,6 +58,12 @@ const LoginView = () => {
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
+        <div>
+          <button 
+          type={"button"} 
+          onClick={() => signIn("google", { callbackUrl: "/", redirect: false })}
+          className="w-full bg-black text-white p-1 mt-2">Google</button>
+        </div>
       </div>
       <p>
         Don{"'"}t have an account? Sign Up{" "}
