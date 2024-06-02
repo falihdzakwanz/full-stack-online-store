@@ -1,7 +1,9 @@
 "use client";
 
+import AuthLayout from "@/components/layouts/AuthLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import authServices from "@/services/auth/index";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,15 +28,8 @@ const RegisterView = () => {
       password: formData.password.value,
     };
 
-    const response = await fetch("/api/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const result = await response.json();
+    const response = await authServices.registerAccount(data);
+    const result = response.data;
 
     if (result.statusCode === 200) {
       formData.reset();
@@ -47,38 +42,36 @@ const RegisterView = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <h1 className="">Register</h1>
-      {error && <p>{error}</p>}
-      <div className="bg-slate-500 p-9">
-        <form onSubmit={handleSubmit}>
-          <Input
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="johndoe@gmail.com"
-          />
-          <Input label="Fullname" name="fullname" type="text" />
-          <Input label="Phone" name="phone" type="number" />
-          <Input label="Password" name="password" type="password" />
+    <AuthLayout
+      title="Register"
+      link="/auth/login"
+      linkText="Have an account ? Sign In"
+      error={error}
+    >
+      <form onSubmit={handleSubmit}>
+        <Input
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="johndoe@gmail.com"
+        />
+        <Input label="Fullname" name="fullname" type="text" />
+        <Input label="Phone" name="phone" type="number" />
+        <Input label="Password" name="password" type="password" />
 
-          <Button type="submit">{isLoading ? "Loading..." : "Register"}</Button>
-        </form>
-        <div>
-          <Button
-            type="button"
-            onClick={() =>
-              signIn("google", { callbackUrl: "/", redirect: false })
-            }
-          >
-            {"Google"}
-          </Button>
-        </div>
+        <Button type="submit">{isLoading ? "Loading..." : "Register"}</Button>
+      </form>
+      <div>
+        <Button
+          type="button"
+          onClick={() =>
+            signIn("google", { callbackUrl: "/", redirect: false })
+          }
+        >
+          {"Google"}
+        </Button>
       </div>
-      <p>
-        Have an account? Sign in <Link href={"/auth/login"}>here</Link>
-      </p>
-    </div>
+    </AuthLayout>
   );
 };
 
