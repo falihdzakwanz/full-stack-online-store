@@ -1,5 +1,7 @@
 "use client";
 
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -45,24 +47,19 @@ const LoginView = () => {
       {error && <p>{error}</p>}
       <div className="bg-slate-500 p-9">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-          </div>
-
-          <button type="submit" className="w-full bg-black text-white p-1 mt-2">
-            {isLoading ? "Loading..." : "Login"}
-          </button>
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="johndoe@gmail.com"
+          />
+          <Input label="Password" name="password" type="password" />
+          <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
         </form>
         <div>
-          <button 
-          type={"button"} 
-          onClick={() => signIn("google", { callbackUrl: "/", redirect: false })}
-          className="w-full bg-black text-white p-1 mt-2">Google</button>
+          <Button type="button" onClick={() => signIn("google", { callbackUrl: "/", redirect: false })}>
+            {"Google"}
+          </Button>
         </div>
       </div>
       <p>

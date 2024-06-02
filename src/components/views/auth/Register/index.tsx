@@ -1,5 +1,8 @@
 "use client";
 
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -32,7 +35,8 @@ const RegisterView = () => {
     });
 
     const result = await response.json();
-    if (result.status === 200) {
+
+    if (result.statusCode === 200) {
       formData.reset();
       setIsLoading(false);
       router.push("/auth/login");
@@ -48,27 +52,28 @@ const RegisterView = () => {
       {error && <p>{error}</p>}
       <div className="bg-slate-500 p-9">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="fullname">Fullname</label>
-            <input type="text" name="fullname" id="fullname" />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="phone">Phone</label>
-            <input type="text" name="phone" id="phone" />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-          </div>
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="johndoe@gmail.com"
+          />
+          <Input label="Fullname" name="fullname" type="text" />
+          <Input label="Phone" name="phone" type="number" />
+          <Input label="Password" name="password" type="password" />
 
-          <button type="submit" className="w-full bg-black text-white p-1 mt-2">
-            {isLoading ? "Loading..." : "Register"}
-          </button>
+          <Button type="submit">{isLoading ? "Loading..." : "Register"}</Button>
         </form>
+        <div>
+          <Button
+            type="button"
+            onClick={() =>
+              signIn("google", { callbackUrl: "/", redirect: false })
+            }
+          >
+            {"Google"}
+          </Button>
+        </div>
       </div>
       <p>
         Have an account? Sign in <Link href={"/auth/login"}>here</Link>

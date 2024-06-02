@@ -1,4 +1,4 @@
-import { loginWithGoogle, signIn } from "@/lib/firebase/service";
+import { loginWithGoogle, signIn } from "@/services/auth";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
@@ -56,13 +56,10 @@ const authOptions: NextAuthOptions = {
           type: "google",
         };
 
-        await loginWithGoogle(
-          data,
-          (data: any) => {
-            token.email = data.email;
-            token.fullname = data.fullname;
-            token.role = data.role;
-          });
+        const userData: any = await loginWithGoogle(data);
+        token.email = userData.email;
+        token.fullname = userData.fullname;
+        token.role = userData.role;
       }
 
       return token;
