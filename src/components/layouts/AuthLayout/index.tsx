@@ -1,27 +1,21 @@
 import Link from "next/link";
 
 type Proptypes = {
-    error?: string;
-    title?: string;
-    children: React.ReactNode;
-    link: string;
-    linkText?: string;
-}
+  error?: string;
+  title?: string;
+  children: React.ReactNode;
+};
 
 const AuthLayout = (props: Proptypes) => {
-    const { error, title, children, link, linkText } = props;
+  const { error, title, children } = props;
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h1 className="">{title}</h1>
       {error && <p>{error}</p>}
-      <div className="bg-slate-500 p-9">
+      <div className="bg-slate-500 p-8 rounded-sm">
+        <h1 className="text-center text-xl font-bold">{title}</h1>
         {children}
       </div>
-      <p>
-        {linkText}{" "}
-        <Link href={link}>here</Link>
-      </p>
     </div>
   );
 };

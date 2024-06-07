@@ -10,7 +10,7 @@ const Button = (props: Propstypes) => {
     <button
       type={type}
       onClick={onClick}
-      className="w-full bg-black text-white p-1 mt-2"
+      className="w-full bg-black text-white p-1 mt-2 rounded-sm"
     >
       {children}
     </button>

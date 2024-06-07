@@ -42,12 +42,7 @@ const RegisterView = () => {
   };
 
   return (
-    <AuthLayout
-      title="Register"
-      link="/auth/login"
-      linkText="Have an account ? Sign In"
-      error={error}
-    >
+    <AuthLayout title="SignUp" error={error}>
       <form onSubmit={handleSubmit}>
         <Input
           label="Email"
@@ -59,8 +54,15 @@ const RegisterView = () => {
         <Input label="Phone" name="phone" type="number" />
         <Input label="Password" name="password" type="password" />
 
-        <Button type="submit">{isLoading ? "Loading..." : "Register"}</Button>
+        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
       </form>
+      <p className="text-xs mt-1">
+        Have an account ? Sign In{" "}
+        <Link className="text-blue-600" href={"/auth/login"}>
+          here
+        </Link>
+      </p>
+      <hr className="mt-2 mb-2" />
       <div>
         <Button
           type="button"

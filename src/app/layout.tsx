@@ -6,6 +6,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import Navbar from "@/components/layouts/Navbar";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,15 +16,18 @@ const inter = Inter({ subsets: ["latin"] });
 // };
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
+  const disableNavbar = ["/auth/login", "/auth/register"];
+  const pathName = usePathname();
+
   return (
     <SessionProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Navbar />
+          {!disableNavbar.includes(pathName) && <Navbar />}
           {children}
         </body>
       </html>
