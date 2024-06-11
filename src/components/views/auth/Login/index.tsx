@@ -52,7 +52,12 @@ const LoginView = () => {
           placeholder="johndoe@gmail.com"
         />
         <Input label="Password" name="password" type="password" />
-        <Button type="submit">{isLoading ? "Loading..." : "Login"}</Button>
+        <Button
+          className={"w-full bg-black text-white p-1 mt-2 rounded-sm"}
+          type="submit"
+        >
+          {isLoading ? "Loading..." : "Login"}
+        </Button>
       </form>
       <p className="text-xs mt-1">
         Don{"'"}t Have an account ? Sign Up{" "}
@@ -63,6 +68,7 @@ const LoginView = () => {
       <hr className="mt-2 mb-2" />
       <div>
         <Button
+          className={"w-full bg-black text-white p-1 mt-2 rounded-sm"}
           type="button"
           onClick={() =>
             signIn("google", { callbackUrl: "/", redirect: false })

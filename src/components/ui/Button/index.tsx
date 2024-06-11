@@ -1,16 +1,17 @@
 type Propstypes = {
     type?: "button" | "submit" | "reset" | undefined;
     onClick?: () => void;
+    className: string;
     children: React.ReactNode;
 }
 
 const Button = (props: Propstypes) => {
-    const { type, onClick, children } = props;
+    const { type, onClick, children, className } = props;
   return (
     <button
       type={type}
       onClick={onClick}
-      className="w-full bg-black text-white p-1 mt-2 rounded-sm"
+      className={className}
     >
       {children}
     </button>

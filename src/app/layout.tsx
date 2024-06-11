@@ -5,8 +5,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-import Navbar from "@/components/layouts/Navbar";
+import Navbar from "@/components/fragments/Navbar";
 import { usePathname } from "next/navigation";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,17 +21,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const disableNavbar = ["/auth/login", "/auth/register"];
+  const disableNavbar = ["auth", "admin"];
   const pathName = usePathname();
 
   return (
-    <SessionProvider>
-      <html lang="en">
+    <html lang="en">
+      <SessionProvider>
+        <Head>
+          <link 
+            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' 
+            rel='stylesheet'
+            />
+        </Head>
         <body className={inter.className}>
-          {!disableNavbar.includes(pathName) && <Navbar />}
+          {!disableNavbar.includes(pathName.split("/")[1]) && <Navbar />}
           {children}
         </body>
-      </html>
-    </SessionProvider>
+      </SessionProvider>
+    </html>
   );
 }

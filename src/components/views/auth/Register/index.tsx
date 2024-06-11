@@ -54,7 +54,12 @@ const RegisterView = () => {
         <Input label="Phone" name="phone" type="number" />
         <Input label="Password" name="password" type="password" />
 
-        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
+        <Button
+          className={"w-full bg-black text-white p-1 mt-2 rounded-sm"}
+          type="submit"
+        >
+          {isLoading ? "Loading..." : "Sign Up"}
+        </Button>
       </form>
       <p className="text-xs mt-1">
         Have an account ? Sign In{" "}
@@ -65,6 +70,7 @@ const RegisterView = () => {
       <hr className="mt-2 mb-2" />
       <div>
         <Button
+          className={"w-full bg-black text-white p-1 mt-2 rounded-sm"}
           type="button"
           onClick={() =>
             signIn("google", { callbackUrl: "/", redirect: false })
