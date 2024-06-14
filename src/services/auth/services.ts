@@ -50,6 +50,8 @@ export async function loginWithGoogle(data: {
   phone?: string;
   type: string;
   role?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }) {
   const user = await retrieveDataByField("users", "email", data.email);
 
@@ -57,6 +59,9 @@ export async function loginWithGoogle(data: {
     return user[0];
   } else {
     data.role = "member";
+    data.createdAt = new Date();
+    data.updatedAt = new Date();
+    data.password = "";
     await addData("users", data);
     return data;
   }

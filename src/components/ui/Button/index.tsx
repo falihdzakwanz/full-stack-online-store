@@ -1,11 +1,11 @@
-type Propstypes = {
+type Proptypes = {
     type?: "button" | "submit" | "reset" | undefined;
     onClick?: () => void;
-    className: string;
+    className?: string;
     children: React.ReactNode;
 }
 
-const Button = (props: Propstypes) => {
+const Button = (props: Proptypes) => {
     const { type, onClick, children, className } = props;
   return (
     <button

@@ -1,10 +1,10 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BiSolidDashboard, BiSolidBox } from "react-icons/bi";
+import { BiSolidDashboard, BiSolidBox, BiSolidGroup } from "react-icons/bi";
 
 type Proptypes = {
   lists: Array<{
@@ -22,6 +22,7 @@ const Sidebar = (props: Proptypes) => {
   const icons: IconType = {
     BiSolidDashboard: <BiSolidDashboard className="text-2xl" />,
     BiSolidBox: <BiSolidBox className="text-2xl" />,
+    BiSolidGroup: <BiSolidGroup className="text-2xl" />
   };
   const { lists } = props;
   const pathname = usePathname();
