@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
       });
     }
   } catch (error) {
-    console.error("Error during signup:", error);
     return NextResponse.json({
       status: false,
       statusCode: 500,

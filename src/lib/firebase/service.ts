@@ -59,7 +59,6 @@ export async function updateData(collectionName: string, id: string, data: any) 
     await updateDoc(docRef, data);
     return true;
   } catch (error) {
-    console.error(error);
     return false;
   }
 }
@@ -70,7 +69,6 @@ export async function deleteData(collectionName: string, id: string){
     await deleteDoc(docRef);
     return true;
   } catch (error) {
-    console.error(error);
     return false;
   }
 }

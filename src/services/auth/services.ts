@@ -28,7 +28,6 @@ export async function signUp(userData: {
     await addData("users", userData);
     return true;
   } catch (error) {
-    console.error(error);
     return false;
   }
 }
