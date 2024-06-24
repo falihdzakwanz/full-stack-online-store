@@ -10,15 +10,15 @@ const Page = () => {
   const session: any = useSession();
 
   useEffect(() => {
-    const getAllUsers = async () => {
-      if (session.status === "authenticated" && session.data?.accessToken) {
+    if (session.status === "authenticated" && session.data?.accessToken) {
+      const getAllUsers = async () => {
         const { data } = await userServices.getAllUsers(
           session.data.accessToken
         );
         setUsers(data.data);
-      }
-    };
-    getAllUsers();
+      };
+      getAllUsers();
+    }
   }, [session]);
 
   return (

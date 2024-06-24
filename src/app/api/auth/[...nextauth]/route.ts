@@ -25,6 +25,7 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
         const user: any = await signIn(email);
+
         if (user) {
           const passwordConfirm = await compare(password, user.password);
           if (passwordConfirm) {
@@ -48,19 +49,25 @@ const authOptions: NextAuthOptions = {
         token.fullname = user.fullname;
         token.phone = user.phone;
         token.role = user.role;
+        token.id = user.id;
+        token.image = user.image;
       }
 
       if (account?.provider === "google") {
         const data = {
           fullname: user.name,
           email: user.email,
+          image: user.image,
           type: "google",
         };
 
         const userData: any = await loginWithGoogle(data);
+
         token.email = userData.email;
         token.fullname = userData.fullname;
         token.role = userData.role;
+        token.image = userData.image;
+        token.id = userData.id;
       }
 
       return token;
@@ -79,13 +86,18 @@ const authOptions: NextAuthOptions = {
       if ("role" in token) {
         session.user.role = token.role;
       }
+      if ("image" in token) {
+        session.user.image = token.image;
+      }
+      if ("id" in token) {
+        session.user.id = token.id;
+      }
 
       const accessToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {
         algorithm: "HS256",
       });
 
       session.accessToken = accessToken;
-
       return session;
     },
   },

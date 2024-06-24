@@ -22,6 +22,9 @@ const config: Config = {
       maxHeight: {
         "80vh": "80vh",
       },
+      boxShadow: {
+        custom: "0 0 3px rgba(0, 0, 0, 0.5)",
+      },
     },
   },
   plugins: [],

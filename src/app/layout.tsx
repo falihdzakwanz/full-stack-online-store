@@ -21,7 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const disableNavbar = ["auth", "admin"];
+  const disableNavbar = ["auth", "admin", "member"];
   const pathName = usePathname();
 
   return (

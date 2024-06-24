@@ -21,10 +21,10 @@ const ModalUpdateUser = (props: Proptypes) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData: any = e.target as HTMLFormElement;
+    const form: any = e.target as HTMLFormElement;
 
     const data = {
-      role: formData.role.value,
+      role: form.role.value,
     };
 
     const response = await userServices.updateUser(

@@ -26,7 +26,7 @@ const AdminLayout = (props: Proptypes) => {
     const { children } = props;
     return (
         <div className="flex">
-            <Sidebar lists={listSidebarItem} />
+            <Sidebar lists={listSidebarItem} title="Admin Panel" />
             <div className="w-full">{children}</div>
         </div>
     )

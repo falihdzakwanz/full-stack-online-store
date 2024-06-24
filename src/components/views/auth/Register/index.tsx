@@ -19,20 +19,20 @@ const RegisterView = () => {
     setIsLoading(true);
     setError("");
 
-    const formData = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement;
 
     const data = {
-      email: formData.email.value,
-      fullname: formData.fullname.value,
-      phone: formData.phone.value,
-      password: formData.password.value,
+      email: form.email.value,
+      fullname: form.fullname.value,
+      phone: form.phone.value,
+      password: form.password.value,
     };
 
     const response = await authServices.registerAccount(data);
     const result = response.data;
 
     if (result.statusCode === 200) {
-      formData.reset();
+      form.reset();
       setIsLoading(false);
       router.push("/auth/login");
     } else {

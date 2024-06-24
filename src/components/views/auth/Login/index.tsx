@@ -18,19 +18,19 @@ const LoginView = () => {
     setIsLoading(true);
     setError("");
 
-    const formData = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement;
 
     try {
       const res = await signIn("credentials", {
         redirect: false,
-        email: formData.email.value,
-        password: formData.password.value,
+        email: form.email.value,
+        password: form.password.value,
         callBackUrl: "/",
       });
 
       if (!res?.error) {
         setIsLoading(false);
-        formData.reset();
+        form.reset();
         push("/");
       } else {
         setIsLoading(false);
