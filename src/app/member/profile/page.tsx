@@ -19,7 +19,7 @@ const Page = () => {
       };
       getProfile();
     }
-  }, [session]);
+  }, [session, profile]);
 
   return (
     <>
