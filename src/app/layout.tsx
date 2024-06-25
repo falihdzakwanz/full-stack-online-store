@@ -4,10 +4,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import { Session } from "next-auth";
-import Navbar from "@/components/fragments/Navbar";
 import { usePathname } from "next/navigation";
 import Head from "next/head";
+import Navbar from "@/components/fragments/Navbar";
+import Toaster from "@/components/ui/Toaster";
+import { ToasterProvider, useToaster } from "@/context/ToasterContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,16 +29,26 @@ export default function RootLayout({
     <html lang="en">
       <SessionProvider>
         <Head>
-          <link 
-            href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' 
-            rel='stylesheet'
-            />
+          <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+          />
         </Head>
         <body className={inter.className}>
-          {!disableNavbar.includes(pathName.split("/")[1]) && <Navbar />}
-          {children}
+          <ToasterProvider>
+            {!disableNavbar.includes(pathName.split("/")[1]) && <Navbar />}
+            {children}
+            <ToasterWrapper />
+          </ToasterProvider>
         </body>
       </SessionProvider>
     </html>
   );
+}
+
+function ToasterWrapper() {
+  const { toaster } = useToaster();
+  return toaster.variant ? (
+    <Toaster variant={toaster.variant} message={toaster.message} />
+  ) : null;
 }

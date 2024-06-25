@@ -1,6 +1,7 @@
 import MemberLayout from "@/components/layouts/MemberLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { useToaster } from "@/context/ToasterContext";
 import { uploadFile } from "@/lib/firebase/service";
 import userServices from "@/services/users";
 import Image from "next/image";
@@ -16,6 +17,7 @@ const ProfileMemberView = (props: propTypes) => {
   const [changeImage, setChangeImage] = useState<any>({});
   const [isLoading, setIsLoading] = useState("");
   const { profile, setProfile, session } = props;
+  const { setToaster } = useToaster();
 
   const handleChangeProfile = async (e: any) => {
     e.preventDefault();
@@ -43,8 +45,16 @@ const ProfileMemberView = (props: propTypes) => {
         phone: data.phone,
       });
       form.reset();
+      setToaster({
+        variant: "success",
+        message: "Success Update Profile",
+      });
     } else {
       setIsLoading("");
+      setToaster({
+        variant: "error",
+        message: "Failed Update Profile",
+      });
     }
   };
 
@@ -77,12 +87,24 @@ const ProfileMemberView = (props: propTypes) => {
               });
               setChangeImage({});
               e.target[0].value = "";
+              setToaster({
+                variant: "success",
+                message: "Success Change Avatar",
+              });
             } else {
               setIsLoading("");
+              setToaster({
+                variant: "error",
+                message: "Failed Change Avatar",
+              });
             }
           } else {
             setIsLoading("");
             setChangeImage({});
+            setToaster({
+              variant: "error",
+              message: "Avatar Size is More Than 1MB",
+            });
           }
         }
       );
@@ -105,7 +127,7 @@ const ProfileMemberView = (props: propTypes) => {
       oldPassword: form["old-password"].value,
       encryptedPassword: profile.password,
     };
-    console.log(data)
+
     const response: any = await userServices.updateProfile(
       profile.id,
       data,
@@ -115,9 +137,17 @@ const ProfileMemberView = (props: propTypes) => {
 
     if (result.statusCode === 200) {
       setIsLoading("");
-      form.reset()
+      form.reset();
+      setToaster({
+        variant: "success",
+        message: "Success Update Password",
+      });
     } else {
       setIsLoading("");
+      setToaster({
+        variant: "error",
+        message: "Failed Update Password",
+      });
     }
   };
 
@@ -204,7 +234,7 @@ const ProfileMemberView = (props: propTypes) => {
               type="submit"
               className="bg-black text-white p-2 mt-2 rounded-sm"
             >
-             {isLoading === "profile" ? "Updating..." : "Update"}
+              {isLoading === "profile" ? "Updating..." : "Update"}
             </Button>
           </form>
         </div>

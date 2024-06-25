@@ -16,6 +16,14 @@ const config: Config = {
       backgroundColor: {
         "black-50": "rgba(0, 0, 0, 0.5)",
       },
+      colors: {
+        barSuccess: "#3F9242",
+        success: "#A3D9A5",
+        barError: "#BB2525",
+        error: "#F39B9A",
+        barWarning: "#E9B949",
+        warning: "#F8E3A2",
+      },
       width: {
         "50vw": "50vw",
       },

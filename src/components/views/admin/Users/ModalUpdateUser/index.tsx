@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
+import { useToaster } from "@/context/ToasterContext";
 import userServices from "@/services/users";
 import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
@@ -16,6 +17,7 @@ const ModalUpdateUser = (props: Proptypes) => {
   const { updatedUser, setUpdatedUser, setUsersData } = props;
   const [isLoading, setIsLoading] = useState(false);
   const session: any = useSession();
+  const { setToaster } = useToaster();
 
   const handleUpdateUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,8 +43,16 @@ const ModalUpdateUser = (props: Proptypes) => {
         session.data?.accessToken
       );
       setUsersData(data.data);
+      setToaster({
+        variant: "success",
+        message: "Success Update User",
+      });
     } else {
       setIsLoading(false);
+      setToaster({
+        variant: "error",
+        message: "Failed Update User",
+      });
     }
   };
 

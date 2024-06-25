@@ -100,6 +100,21 @@ export async function PUT(request: NextRequest) {
         delete data.oldPassword;
         delete data.encryptedPassword;
         data.password = await bcrypt.hash(data.password, 10);
+
+        const result = await updateData("users", id, data);
+        if (result) {
+          return NextResponse.json({
+            status: true,
+            statusCode: 200,
+            message: "Success",
+          });
+        } else {
+          return NextResponse.json({
+            status: false,
+            statusCode: 400,
+            message: "Failed to update password",
+          });
+        }
       } else {
         return NextResponse.json({
           status: false,
