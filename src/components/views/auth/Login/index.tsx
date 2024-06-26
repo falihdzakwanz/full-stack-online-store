@@ -3,20 +3,23 @@
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { useToaster } from "@/context/ToasterContext";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const { push } = useRouter();
+  const { setToaster } = useToaster();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     const form = e.target as HTMLFormElement;
 
@@ -25,25 +28,35 @@ const LoginView = () => {
         redirect: false,
         email: form.email.value,
         password: form.password.value,
-        callBackUrl: "/",
+        callbackUrl,
       });
 
       if (!res?.error) {
         setIsLoading(false);
         form.reset();
-        push("/");
+        setToaster({
+          variant: "success",
+          message: "Login Success",
+        });
+        push(callbackUrl);
       } else {
         setIsLoading(false);
-        setError("Email or password is incorrect");
+        setToaster({
+          variant: "error",
+          message: "Email or password is incorrect",
+        });
       }
     } catch (error) {
       setIsLoading(false);
-      setError("Email or password is incorrect");
+      setToaster({
+        variant: "error",
+        message: "Login failed, something went wrong",
+      });
     }
   };
 
   return (
-    <AuthLayout title="Login" error={error}>
+    <AuthLayout title="Login">
       <form onSubmit={handleSubmit}>
         <Input
           label="Email"
@@ -70,9 +83,7 @@ const LoginView = () => {
         <Button
           className={"w-full bg-black text-white p-1 mt-2 rounded-sm"}
           type="button"
-          onClick={() =>
-            signIn("google", { callbackUrl: "/", redirect: false })
-          }
+          onClick={() => signIn("google", { callbackUrl, redirect: false })}
         >
           {"Google"}
         </Button>

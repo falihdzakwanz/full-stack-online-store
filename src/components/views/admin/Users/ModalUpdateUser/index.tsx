@@ -4,16 +4,17 @@ import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
 import { useToaster } from "@/context/ToasterContext";
 import userServices from "@/services/users";
+import { User } from "@/types/user.type";
 import { useSession } from "next-auth/react";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
-type Proptypes = {
-  updatedUser: any;
-  setUpdatedUser: any;
-  setUsersData: any;
+type PropTypes = {
+  updatedUser: User | any;
+  setUpdatedUser: Dispatch<SetStateAction<{}>>;
+  setUsersData: Dispatch<SetStateAction<User[]>>;
 };
 
-const ModalUpdateUser = (props: Proptypes) => {
+const ModalUpdateUser = (props: PropTypes) => {
   const { updatedUser, setUpdatedUser, setUsersData } = props;
   const [isLoading, setIsLoading] = useState(false);
   const session: any = useSession();
@@ -95,7 +96,7 @@ const ModalUpdateUser = (props: Proptypes) => {
           type="submit"
           className="bg-black text-white rounded-sm text-sm p-2 mt-1"
         >
-          Update
+          {isLoading ? "Updating..." : "Update"}
         </Button>
       </form>
     </Modal>

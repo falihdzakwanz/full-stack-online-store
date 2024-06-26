@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import ModalDeleteUser from "./ModalDeleteUser";
+import { User } from "@/types/user.type";
 
-type Proptypes = {
-  users: any;
+type PropTypes = {
+  users: User[];
 };
 
-const UsersManagementView = (props: Proptypes) => {
+const UsersManagementView = (props: PropTypes) => {
   const { users } = props;
-  const [updatedUser, setUpdatedUser] = useState<any>({});
-  const [deletedUser, setDeletedUser] = useState<any>({});
-  const [usersData, setUsersData] = useState<any>([]);
+  const [updatedUser, setUpdatedUser] = useState<User | {}>({});
+  const [deletedUser, setDeletedUser] = useState<User | {}>({});
+  const [usersData, setUsersData] = useState<User[]>([]);
 
   useEffect(() => {
     setUsersData(users);
@@ -36,7 +37,7 @@ const UsersManagementView = (props: Proptypes) => {
               </tr>
             </thead>
             <tbody>
-              {usersData.map((user: any, index: number) => (
+              {usersData.map((user: User, index: number) => (
                 <tr key={index}>
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{user.fullname}</td>

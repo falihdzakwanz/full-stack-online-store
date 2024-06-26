@@ -3,6 +3,7 @@
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { useToaster } from "@/context/ToasterContext";
 import authServices from "@/services/auth/index";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -11,13 +12,12 @@ import { FormEvent, useState } from "react";
 
 const RegisterView = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { setToaster } = useToaster();
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     const form = e.target as HTMLFormElement;
 
@@ -28,21 +28,35 @@ const RegisterView = () => {
       password: form.password.value,
     };
 
+    try {
     const response = await authServices.registerAccount(data);
     const result = response.data;
 
     if (result.statusCode === 200) {
       form.reset();
       setIsLoading(false);
+      setToaster({
+        variant: "success",
+        message: "Register Success",
+      });
       router.push("/auth/login");
     } else {
       setIsLoading(false);
-      setError("Email is already registered");
+      setToaster({
+        variant: "error",
+        message: "Email is already registered",
+      });
+    }
+    } catch (error) {
+            setToaster({
+        variant: "error",
+        message: "Register failed, something went wrong",
+      });
     }
   };
 
   return (
-    <AuthLayout title="SignUp" error={error}>
+    <AuthLayout title="SignUp">
       <form onSubmit={handleSubmit}>
         <Input
           label="Email"

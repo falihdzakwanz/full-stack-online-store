@@ -1,8 +1,8 @@
-import Sidebar from "@/components/fragments/Sidebar"
+import Sidebar from "@/components/fragments/Sidebar";
 
-type Proptypes = {
-    children: React.ReactNode;
-}
+type PropTypes = {
+  children: React.ReactNode;
+};
 
 const listSidebarItem = [
   {
@@ -22,14 +22,14 @@ const listSidebarItem = [
   },
 ];
 
-const AdminLayout = (props: Proptypes) => {
-    const { children } = props;
-    return (
-        <div className="flex">
-            <Sidebar lists={listSidebarItem} title="Admin Panel" />
-            <div className="w-full">{children}</div>
-        </div>
-    )
-}
+const AdminLayout = (props: PropTypes) => {
+  const { children } = props;
+  return (
+    <div className="flex">
+      <Sidebar lists={listSidebarItem} title="Admin Panel" />
+      <div className="w-full">{children}</div>
+    </div>
+  );
+};
 
 export default AdminLayout;

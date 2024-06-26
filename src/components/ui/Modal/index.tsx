@@ -1,11 +1,11 @@
 import { Dispatch, useEffect, useRef } from "react";
 
-type Proptypes = {
+type PropTypes = {
   children: React.ReactNode;
   onClose: any;
 };
 
-const Modal = (props: Proptypes) => {
+const Modal = (props: PropTypes) => {
   const { children, onClose } = props;
   const ref: any = useRef();
   useEffect(() => {
@@ -16,8 +16,8 @@ const Modal = (props: Proptypes) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    }
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [onClose]);
 
   return (

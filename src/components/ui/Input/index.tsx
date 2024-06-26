@@ -1,4 +1,4 @@
-type Proptypes = {
+type PropTypes = {
   label?: string;
   name: string;
   type: string;
@@ -7,7 +7,7 @@ type Proptypes = {
   disabled?: boolean;
 };
 
-const Input = (props: Proptypes) => {
+const Input = (props: PropTypes) => {
   const { label, name, type, placeholder, defaultValue, disabled } = props;
 
   return (

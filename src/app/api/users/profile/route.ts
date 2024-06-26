@@ -67,8 +67,6 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const url = new URL(request.url);
-    const id: any = url.pathname.split("/").pop();
     const { data } = await request.json();
     const token = request.headers.get("authorization")?.split(" ")[1] || "";
 
@@ -101,7 +99,7 @@ export async function PUT(request: NextRequest) {
         delete data.encryptedPassword;
         data.password = await bcrypt.hash(data.password, 10);
 
-        const result = await updateData("users", id, data);
+        const result = await updateData("users", decoded.id, data);
         if (result) {
           return NextResponse.json({
             status: true,
@@ -124,7 +122,7 @@ export async function PUT(request: NextRequest) {
       }
     }
 
-    const result = await updateData("users", id, data);
+    const result = await updateData("users", decoded.id, data);
     if (result) {
       return NextResponse.json({
         status: true,

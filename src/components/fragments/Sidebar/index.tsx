@@ -6,13 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { Suspense, ComponentType, LazyExoticComponent } from "react";
 
-type Proptypes = {
+type PropTypes = {
   lists: Array<{
     title: string;
     url: string;
     icon: string;
   }>;
-  title?: string
+  title?: string;
 };
 
 const loadIcon = (
@@ -30,7 +30,7 @@ const loadIcon = (
   );
 };
 
-const Sidebar = (props: Proptypes) => {
+const Sidebar = (props: PropTypes) => {
   const { lists, title } = props;
   const pathname = usePathname();
   const { data } = useSession();

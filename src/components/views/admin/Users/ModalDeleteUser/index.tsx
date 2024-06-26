@@ -3,8 +3,16 @@ import Modal from "@/components/ui/Modal";
 import userServices from "@/services/users";
 import { useToaster } from "@/context/ToasterContext";
 import { useSession } from "next-auth/react";
+import { User } from "@/types/user.type";
+import { Dispatch, SetStateAction } from "react";
 
-const ModalDeleteUser = (props: any) => {
+type PropTypes = {
+  deletedUser: User | any;
+  setDeletedUser: Dispatch<SetStateAction<{}>>;
+  setUsersData: Dispatch<SetStateAction<User[]>>;
+};
+
+const ModalDeleteUser = (props: PropTypes) => {
   const { deletedUser, setDeletedUser, setUsersData } = props;
   const session: any = useSession();
   const { setToaster } = useToaster();
@@ -30,7 +38,7 @@ const ModalDeleteUser = (props: any) => {
     } else {
       setToaster({
         variant: "error",
-        message: "Failed Update User",
+        message: "Failed Delete User",
       });
     }
   };

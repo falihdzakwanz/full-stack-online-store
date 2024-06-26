@@ -3,7 +3,7 @@ import { useToaster } from "@/context/ToasterContext";
 import Button from "../Button";
 import { useEffect, useRef, useState } from "react";
 
-type Proptypes = {
+type PropTypes = {
   variant: string;
   message?: string;
 };
@@ -32,7 +32,7 @@ const toasterVariant: any = {
   },
 };
 
-const Toaster = (props: Proptypes) => {
+const Toaster = (props: PropTypes) => {
   const { variant, message } = props;
   const IconComponent = toasterVariant[variant].icon;
   const { setToaster } = useToaster();
@@ -58,7 +58,7 @@ const Toaster = (props: Proptypes) => {
 
   return (
     <div
-      className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 flex shadow-custom py-5 px-6 rounded-sm overflow-hidden`}
+      className="bg-white fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 flex shadow-custom py-5 px-6 rounded-sm overflow-hidden"
     >
       <div className="flex flex-row items-center justify-around gap-5">
         <div className="">

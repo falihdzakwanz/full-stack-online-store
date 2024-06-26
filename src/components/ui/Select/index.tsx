@@ -3,7 +3,7 @@ type Option = {
   value: string;
 };
 
-type Proptypes = {
+type PropTypes = {
   label?: string;
   name: string;
   defaultValue?: string;
@@ -11,7 +11,7 @@ type Proptypes = {
   options: Option[];
 };
 
-const Select = (props: Proptypes) => {
+const Select = (props: PropTypes) => {
   const { label, name, defaultValue, disabled, options } = props;
 
   return (

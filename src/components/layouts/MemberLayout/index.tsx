@@ -1,6 +1,6 @@
 import Sidebar from "@/components/fragments/Sidebar";
 
-type Proptypes = {
+type PropTypes = {
   children: React.ReactNode;
 };
 
@@ -22,7 +22,7 @@ const listSidebarItem = [
   },
 ];
 
-const MemberLayout = (props: Proptypes) => {
+const MemberLayout = (props: PropTypes) => {
   const { children } = props;
   return (
     <div className="flex">
