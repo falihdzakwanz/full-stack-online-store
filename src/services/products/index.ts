@@ -22,6 +22,15 @@ const productServices = {
         },
       }
     ),
+  deleteProduct: (id: string, token: string) =>
+    instance.delete(
+      `/api/products/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ),
 };
 
 export default productServices;

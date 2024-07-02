@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import app from "./init";
 import {
+  deleteObject,
   getDownloadURL,
   getStorage,
   ref,
@@ -90,7 +91,13 @@ export async function deleteData(collectionName: string, id: string) {
   }
 }
 
-export async function uploadFile(id: string, file: any, newName: string, collection: string, callback: Function) {
+export async function uploadFile(
+  id: string,
+  file: any,
+  newName: string,
+  collection: string,
+  callback: Function
+) {
   if (file.size < 1048576) {
     const storageRef = ref(storage, `images/${collection}/${id}/${newName}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -98,14 +105,14 @@ export async function uploadFile(id: string, file: any, newName: string, collect
       "state_changed",
       (snapshot) => {
         const progress =
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       },
       (error) => {
         console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          callback(true, downloadURL)
+          callback(true, downloadURL);
         });
       }
     );
@@ -114,4 +121,15 @@ export async function uploadFile(id: string, file: any, newName: string, collect
   }
 
   return true;
+}
+
+export async function deleteFile(url: string) {
+  const storageRef = ref(storage, url);
+
+  try {
+    await deleteObject(storageRef);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

@@ -8,6 +8,7 @@ import { convertIDR } from "@/utils/currency";
 import { Product } from "@/types/product.type";
 import ModalAddProduct from "./ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct";
+import ModalDeleteProduct from "./ModalDeleteProduct";
 
 type PropTypes = {
   products: Product[];
@@ -18,6 +19,7 @@ const ProductsAdminView = (props: PropTypes) => {
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [modalAddProduct, setModalAddProduct] = useState(false);
   const [updatedProduct, setUpdatedProduct] = useState<Product | any>({});
+  const [deletedProduct, setDeletedProduct] = useState<Product | any>({});
 
   useEffect(() => {
     setProductsData(products);
@@ -28,8 +30,8 @@ const ProductsAdminView = (props: PropTypes) => {
       <AdminLayout>
         <div className="px-9 py-12">
           <h1 className="text-2xl font-bold">Products Management</h1>
-          <Button 
-            type="button" 
+          <Button
+            type="button"
             className="bg-black text-white p-2 flex gap-2 justify-center items-center rounded-md mb-3"
             onClick={() => setModalAddProduct(true)}
           >
@@ -105,6 +107,7 @@ const ProductsAdminView = (props: PropTypes) => {
                       <Button
                         className="bg-red-700 text-white text-2xl p-2"
                         type="button"
+                        onClick={() => setDeletedProduct(product)}
                       >
                         <BiTrash />
                       </Button>
@@ -128,8 +131,26 @@ const ProductsAdminView = (props: PropTypes) => {
           </table>
         </div>
       </AdminLayout>
-      {modalAddProduct && <ModalAddProduct setModalAddProduct={setModalAddProduct} setProductsData={setProductsData}/>}
-      {Object.keys(updatedProduct).length > 0&& <ModalUpdateProduct setUpdatedProduct={setUpdatedProduct} updatedProduct={updatedProduct} setProductsData={setProductsData}/>}
+      {modalAddProduct && (
+        <ModalAddProduct
+          setModalAddProduct={setModalAddProduct}
+          setProductsData={setProductsData}
+        />
+      )}
+      {Object.keys(updatedProduct).length > 0 && (
+        <ModalUpdateProduct
+          setUpdatedProduct={setUpdatedProduct}
+          updatedProduct={updatedProduct}
+          setProductsData={setProductsData}
+        />
+      )}
+      {Object.keys(deletedProduct).length > 0 && (
+        <ModalDeleteProduct
+          setDeletedProduct={setDeletedProduct}
+          deletedProduct={deletedProduct}
+          setProductsData={setProductsData}
+        />
+      )}
     </>
   );
 };

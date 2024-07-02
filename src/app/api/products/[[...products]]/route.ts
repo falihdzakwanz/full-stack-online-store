@@ -1,4 +1,4 @@
-import { addData, retrieveData, updateData } from "@/lib/firebase/service";
+import { addData, deleteData, retrieveData, updateData } from "@/lib/firebase/service";
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -143,6 +143,70 @@ export async function PUT(request: NextRequest) {
         status: false,
         statusCode: 400,
         message: "Failed to update product",
+      });
+    }
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json({
+        status: false,
+        statusCode: 403,
+        message: "Invalid token",
+      });
+    }
+
+    return NextResponse.json({
+      status: false,
+      statusCode: 500,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const url = new URL(request.url);
+    const id: string = url.pathname.split("/").pop() || "";
+    const token = request.headers.get("authorization")?.split(" ")[1] || "";
+
+    if (!token) {
+      return NextResponse.json({
+        status: false,
+        statusCode: 401,
+        message: "No token provided",
+      });
+    }
+
+    const decoded: any = jwt.verify(token, process.env.NEXTAUTH_SECRET || "");
+
+    if (!decoded || decoded.role !== "admin") {
+      return NextResponse.json({
+        status: false,
+        statusCode: 403,
+        message: "Access denied",
+      });
+    }
+
+    if (id === undefined || id === "") {
+      return NextResponse.json({
+        status: false,
+        statusCode: 404,
+        message: "Not Found: ID is missing",
+      });
+    }
+
+    const result = await deleteData("products", id);
+
+    if (result) {
+      return NextResponse.json({
+        status: true,
+        statusCode: 200,
+        message: "Success",
+      });
+    } else {
+      return NextResponse.json({
+        status: false,
+        statusCode: 400,
+        message: "Failed to delete product",
       });
     }
   } catch (error) {
