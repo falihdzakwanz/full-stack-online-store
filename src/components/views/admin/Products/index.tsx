@@ -1,10 +1,13 @@
 import AdminLayout from "@/components/layouts/AdminLayout";
 import Button from "@/components/ui/Button";
+import { BiPlus } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
 import { Product } from "@/types/product.type";
+import ModalAddProduct from "./ModalAddProduct";
+import ModalUpdateProduct from "./ModalUpdateProduct";
 
 type PropTypes = {
   products: Product[];
@@ -13,6 +16,8 @@ type PropTypes = {
 const ProductsAdminView = (props: PropTypes) => {
   const { products } = props;
   const [productsData, setProductsData] = useState<Product[]>([]);
+  const [modalAddProduct, setModalAddProduct] = useState(false);
+  const [updatedProduct, setUpdatedProduct] = useState<Product | any>({});
 
   useEffect(() => {
     setProductsData(products);
@@ -23,6 +28,13 @@ const ProductsAdminView = (props: PropTypes) => {
       <AdminLayout>
         <div className="px-9 py-12">
           <h1 className="text-2xl font-bold">Products Management</h1>
+          <Button 
+            type="button" 
+            className="bg-black text-white p-2 flex gap-2 justify-center items-center rounded-md mb-3"
+            onClick={() => setModalAddProduct(true)}
+          >
+            <BiPlus /> Add Product
+          </Button>
           <table className="w-full border-collapse border">
             <thead className="text-center bg-slate-400">
               <tr>
@@ -86,6 +98,7 @@ const ProductsAdminView = (props: PropTypes) => {
                       <Button
                         className="bg-blue-700 text-white text-2xl p-2"
                         type="button"
+                        onClick={() => setUpdatedProduct(product)}
                       >
                         <BiEdit />
                       </Button>
@@ -115,6 +128,8 @@ const ProductsAdminView = (props: PropTypes) => {
           </table>
         </div>
       </AdminLayout>
+      {modalAddProduct && <ModalAddProduct setModalAddProduct={setModalAddProduct} setProductsData={setProductsData}/>}
+      {Object.keys(updatedProduct).length > 0&& <ModalUpdateProduct setUpdatedProduct={setUpdatedProduct} updatedProduct={updatedProduct} setProductsData={setProductsData}/>}
     </>
   );
 };

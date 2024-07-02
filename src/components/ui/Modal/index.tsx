@@ -1,16 +1,16 @@
-import { Dispatch, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type PropTypes = {
   children: React.ReactNode;
-  onClose: any;
+  onClose: () => void;
 };
 
 const Modal = (props: PropTypes) => {
   const { children, onClose } = props;
-  const ref: any = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         onClose();
       }
     };
@@ -22,7 +22,7 @@ const Modal = (props: PropTypes) => {
 
   return (
     <div className="fixed top-0 w-screen h-screen z-50 bg-black-50 flex items-center justify-center">
-      <div className="bg-white p-5 w-50vw max-h-80vh" ref={ref}>
+      <div className="modal-container bg-white p-5 w-50vw max-h-80vh overflow-y-auto" ref={ref}>
         {children}
       </div>
     </div>

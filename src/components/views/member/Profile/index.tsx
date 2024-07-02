@@ -71,10 +71,14 @@ const ProfileMemberView = (props: PropTypes) => {
     const form = e.target as HTMLFormElement;
 
     const file = form.image.files[0];
+    const newName = "profile." + file.name.split(".")[1];
+
     if (file) {
       uploadFile(
         profile.id,
         file,
+        newName,
+        "users",
         async (status: boolean, newImageURL: string) => {
           if (status) {
             const data = {
@@ -260,8 +264,18 @@ const ProfileMemberView = (props: PropTypes) => {
           <div className="w-1/4 shadow-custom p-4 flex flex-col items-center rounded-sm">
             <h2>Change Password</h2>
             <form onSubmit={handleChangePassword}>
-              <Input name="old-password" label="Old Password" type="password" placeholder="Enter your current password"/>
-              <Input name="new-password" label="New Password" type="password" placeholder="Enter your new password" />
+              <Input
+                name="old-password"
+                label="Old Password"
+                type="password"
+                placeholder="Enter your current password"
+              />
+              <Input
+                name="new-password"
+                label="New Password"
+                type="password"
+                placeholder="Enter your new password"
+              />
               <Button
                 type="submit"
                 className={`bg-black text-white p-2 mt-2 rounded-sm ${

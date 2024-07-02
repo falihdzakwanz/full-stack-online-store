@@ -9,10 +9,7 @@ const Page = () => {
   const [products, setProducts] = useState([]);
   const session: any = useSession();
   const getAllProducts = async () => {
-    const { data } = await productServices
-      .getAllProducts
-      // session.data.accessToken
-      ();
+    const { data } = await productServices.getAllProducts();
     setProducts(data.data);
   };
 
